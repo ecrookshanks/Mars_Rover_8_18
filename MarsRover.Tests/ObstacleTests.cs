@@ -37,5 +37,24 @@ namespace MarsRover.Tests
       Assert.False(moveResult.canMove);
       Assert.True(moveResult.ob.Equals(badObj));
     }
+
+    [Fact]
+    public void RoverReturnsObstacleCoordWhenInListOfCommands()
+    {
+      Mock<IObstacleService> svc = new Mock<IObstacleService>();
+      svc.Setup(o => o.IsPointAnObstacle(1, 3)).Returns(true);
+      Obstacle badObj = new Obstacle(1, 3);
+
+      char[] commands = { 'F', 'F', 'F', 'R', 'F', 'F' };
+
+      Rover r = new Rover(svc.Object);
+      r.StoreCommands(commands);
+
+      (bool obstacleFound, Obstacle ob) moveResult = r.ProcessAllCommands();
+
+      Assert.True(moveResult.obstacleFound);
+      Assert.True(moveResult.ob.Equals(badObj));
+
+    }
   }
 }
