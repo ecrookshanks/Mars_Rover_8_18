@@ -22,5 +22,10 @@ namespace MarsRover
       return false ;
     }
 
+    public override int GetHashCode()
+    {
+      return xPos * 11 + yPos;  // 11 is a prime number
+    }
+
   }
 }
