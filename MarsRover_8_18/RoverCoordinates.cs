@@ -22,5 +22,10 @@
       return false;
 
     }
+
+    public override int GetHashCode()
+    {
+      return xPos * 31 + yPos;  // prime number
+    }
   }
 }

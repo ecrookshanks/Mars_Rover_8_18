@@ -42,12 +42,21 @@ namespace MarsRover
       this.Commands = commands;
     }
 
-    public void ProcessAllCommands()
+    public (bool foundObstacle, Obstacle obstacle) ProcessAllCommands()
     {
+      bool found = false;
+      Obstacle foundObstacle = null;
+
       foreach (char command in this.Commands)
       {
-        this.ProcessSingleCommand(command);
+        (bool canMove, Obstacle ob) moveResult = this.ProcessSingleCommand(command);
+        if (moveResult.canMove == false)
+        {
+          return (true, moveResult.ob);
+        }
       }
+
+      return (found, foundObstacle);
     }
 
     public (bool canMove, Obstacle ob) ProcessSingleCommand(char command)
